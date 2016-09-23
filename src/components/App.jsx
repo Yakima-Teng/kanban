@@ -1,9 +1,12 @@
 // import uuid from 'node-uuid'
 import AltContainer from 'alt-container'
 import React from 'react'
-import Notes from './Notes.jsx'
-import NoteActions from '../actions/NoteActions.js'
-import NoteStore from '../stores/NoteStore.js'
+// import Notes from './Notes.jsx'
+// import NoteActions from '../actions/NoteActions.js'
+// import NoteStore from '../stores/NoteStore.js'
+import Lanes from './Lanes.jsx'
+import LaneActions from '../actions/LaneActions.js'
+import LaneStore from '../stores/LaneStore.js'
 
 export default class App extends React.Component {
   // constructor (props) {
@@ -43,15 +46,16 @@ export default class App extends React.Component {
 
     return (
       <div>
-        <button className="add-note" onClick={this.addNote}>+</button>
-          <AltContainer
-            stores={[NoteStore]}
-            inject={{
-              notes: () => NoteStore.getState().notes
-            }}
-          >
-            <Notes onEdit={this.editNote} onDelete={this.deleteNote} />
-          </AltContainer>
+        <button className="add-lane" onClick={this.addLane}>+</button>
+        <AltContainer
+          stores={[LaneStore]}
+          inject={{
+            lanes: () => LaneStore.getState().lanes || []
+          }}
+        >
+          {/*<Notes onEdit={this.editNote} onDelete={this.deleteNote} />*/}
+          <Lanes />
+        </AltContainer>
       </div>
     )
   }
@@ -70,10 +74,12 @@ export default class App extends React.Component {
   //     console.log('added one task')
   //   })
   // }
-  addNote () {
-    NoteActions.create({task: 'New task'})
+  // addNote () {
+  //   NoteActions.create({task: 'New task'})
+  // }
+  addLane () {
+    LaneActions.create({ name: 'New lane' })
   }
-
   // editNote = (id, task) => {
   //   // Don't modify if trying set an empty value
   //   if (!task.trim()) {
@@ -90,14 +96,14 @@ export default class App extends React.Component {
 
   //   this.setState({notes})
   // }
-  editNote (id, task) {
-    // Don't modify if trying set an empty value
-    if (!task.trim()) {
-      return
-    }
+  // editNote (id, task) {
+  //   // Don't modify if trying set an empty value
+  //   if (!task.trim()) {
+  //     return
+  //   }
 
-    NoteActions.update({id, task})
-  }
+  //   NoteActions.update({id, task})
+  // }
 
   // deleteNote = (id, e) => {
   //   e.stopPropagation()
@@ -106,9 +112,9 @@ export default class App extends React.Component {
   //     notes: this.state.notes.filter(note => note.id !== id)
   //   })
   // }
-  deleteNote (id, e) {
-    e.stopPropagation()
+  // deleteNote (id, e) {
+  //   e.stopPropagation()
 
-    NoteActions.delete(id)
-  }
+  //   NoteActions.delete(id)
+  // }
 }
