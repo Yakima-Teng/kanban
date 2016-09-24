@@ -13,7 +13,14 @@ export default ({ notes, onValueClick, onEdit, onDelete }) => {
       //     onEdit={onEdit.bind(null, note.id)}
       //     onDelete={onDelete.bind(null, note.id)} />
       // </li>
-      <Note className="note" id={note.id} key={note.id}>
+      <Note
+        className="note"
+        id={note.id}
+        key={note.id}
+        onMove={({sourceId, targetId}) => {
+          console.log(`source: ${sourceId}, target: ${targetId}`)
+        }}
+      >
         <Editable
           editing={note.editing}
           value={note.task}
