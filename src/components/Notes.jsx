@@ -1,6 +1,7 @@
 import React from 'react'
 import Note from './Note.jsx'
 import Editable from './Editable.jsx'
+import LaneActions from '../actions/LaneActions.js'
 
 export default ({ notes, onValueClick, onEdit, onDelete }) => {
   return (
@@ -17,9 +18,7 @@ export default ({ notes, onValueClick, onEdit, onDelete }) => {
         className="note"
         id={note.id}
         key={note.id}
-        onMove={({sourceId, targetId}) => {
-          console.log(`source: ${sourceId}, target: ${targetId}`)
-        }}
+        onMove={LaneActions.move}
       >
         <Editable
           editing={note.editing}
