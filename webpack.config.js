@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const NpmInstallPlugin = require('npm-install-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const TARGET = process.env.npm_lifecycle_event
 
 // Load *package.json* so we can use `dependencies` from there
@@ -46,7 +47,15 @@ const common = {
         include: path.join(__dirname, './src')
       }
     ]
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'node_modules/html-webpack-template/index.ejs',
+      title: 'Kanban app',
+      appMountId: 'app',
+      inject: false
+    })
+  ]
 }
 
 /***********************************************************************************
@@ -58,7 +67,7 @@ if (TARGET === 'dev' || !TARGET) {
   module.exports = merge(common, {
     devtool: 'eval-source-map',
     devServer: {
-      contentBase: './dist/',
+      // contentBase: './dist/',
       // Enable history API fallback so HTML5 History API based routing works
       // This is a good default that will come in handy in more complicated setups
       historyApiFallback: true,
