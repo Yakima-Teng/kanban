@@ -4,6 +4,7 @@ const merge = require('webpack-merge')
 const NpmInstallPlugin = require('npm-install-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanPlugin = require('clean-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const TARGET = process.env.npm_lifecycle_event
 
 // Load *package.json* so we can use `dependencies` from there
@@ -13,7 +14,8 @@ process.env.BABEL_ENV = TARGET
 
 const common = {
   entry: {
-    app: './src/index.jsx'
+    app: './src/index.jsx',
+    style: './src/styles/main.less'
   },
   // Add resolve.extensions
   // '' is needed to allow imports without an extension
@@ -29,14 +31,14 @@ const common = {
   },
   module: {
     loaders: [
-      {
-        test: /\.less$/,
-        // loaders are evaluaated from right to left
-        // css-loader will resolve @import and url statements in CSS files
-        // style-loader deals with require statements in JavaScript
-        loaders: ['style-loader', 'css-loader', 'less-loader'],
-        include: path.join(__dirname, './src')
-      },
+      // {
+      //   test: /\.less$/,
+      //   // loaders are evaluaated from right to left
+      //   // css-loader will resolve @import and url statements in CSS files
+      //   // style-loader deals with require statements in JavaScript
+      //   loaders: ['style-loader', 'css-loader', 'less-loader'],
+      //   include: path.join(__dirname, './src')
+      // },
       // Set up jsx. The accepts js too thanks to RegExp
       {
         test: /\.jsx?$/,
@@ -83,6 +85,16 @@ if (TARGET === 'dev' || !TARGET) {
       // 使用package.json中npm run start命令中传入的port参数值
       port: process.env.PORT
     },
+    module: {
+      loaders: [
+        // Define development specific CSS setup
+        {
+          test: /\.less$/,
+          loaders: ['style', 'css', 'less'],
+          include: path.join(__dirname, './src')
+        }
+      ]
+    },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
       // 会自动检测项目文件和webpack.config.js配置文件，主动进行npm package的下载
@@ -110,8 +122,21 @@ if (TARGET === 'build') {
       filename: '[name].[chunkhash].js',
       chunkFilename: '[chunkhash].js'
     },
+    module: {
+      loaders: [
+        // Extract CSS during build
+        {
+          test: /\.less$/,
+          loader: ExtractTextPlugin.extract('style', 'css', 'less'),
+          // loaders: ['style', 'css', 'less'],
+          include: path.join(__dirname, './src')
+        }
+      ]
+    },
     plugins: [
       new CleanPlugin(['./dist/']),
+      // Output extracted CSS to a file
+      new ExtractTextPlugin('[name].[chunkhash].css'),
       // Extract vendor and manifest files
       new webpack.optimize.CommonsChunkPlugin({
         names: ['vendor', 'manifest']

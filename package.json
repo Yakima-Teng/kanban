@@ -4,6 +4,7 @@
   "description": "quote admin",
   "main": "index.js",
   "scripts": {
+    "stats": "webpack --profile --json stats.json",
     "build": "webpack",
     "dev": "webpack-dev-server --port 3000",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -36,6 +37,7 @@
     "eslint-plugin-import": "^1.15.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
+    "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.22.0",
     "html-webpack-template": "^5.2.0",
     "less": "^2.7.1",
