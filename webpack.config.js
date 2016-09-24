@@ -1,11 +1,7 @@
 const path = require('path')
-
 const webpack = require('webpack')
-
 const merge = require('webpack-merge')
-
 const NpmInstallPlugin = require('npm-install-webpack-plugin')
-
 const TARGET = process.env.npm_lifecycle_event
 
 process.env.BABEL_ENV = TARGET
@@ -85,5 +81,18 @@ if (TARGET === 'dev' || !TARGET) {
 }
 
 if (TARGET === 'build') {
-  module.exports = merge(common, {})
+  module.exports = merge(common, {
+    plugins: [
+      // Setting DefinePlugin affects React library size!
+      // DefinPlugin replaces content 'as is' so we need some extra quotes for the generated code to make sense
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': '"production"'
+      }),
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false
+        }
+      })
+    ]
+  })
 }
