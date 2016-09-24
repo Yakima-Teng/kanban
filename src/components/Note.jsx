@@ -1,76 +1,82 @@
 import React from 'react'
 
-// export default ({ task }) => <div>{ task }</div>
 export default class Note extends React.Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      editing: false
-    }
-  }
-
   render () {
-    if (this.state.editing) {
-      return this.renderEdit()
-    }
-
-    return this.renderNote()
-  }
-
-  renderEdit = () => {
-    return <input className="field" type="text"
-      ref={
-        e => e ? e.selectionStart = this.props.task.length : null
-      }
-      autoFocus={true}
-      defaultValue={this.props.task}
-      onBlur={this.finishEdit}
-      onKeyPress={this.checkEnter} />
-  }
-
-  renderNote = () => {
-    // return <div onClick={this.edit}>{this.props.task}</div>
-    // const onDelete = this.props.onDelete
-    const {onDelete, ...rest} = this.props
-
-    return (
-      <div onClick={this.edit}>
-        <span className="task">{this.props.task}</span>
-        {onDelete ? this.renderDelete() : null}
-      </div>
-    )
-  }
-
-  renderDelete = () => {
-    const {onDelete, ...rest} = this.props
-
-    return <button
-      className="delete-note"
-      onClick={onDelete}>x</button>
-  }
-
-  edit = () => {
-    this.setState({
-      editing: true
-    })
-  }
-
-  checkEnter = e => {
-    if (e.key === 'Enter') {
-      this.finishEdit(e)
-    }
-  }
-
-  finishEdit = e => {
-    const value = e.target.value
-
-    if (this.props.onEdit) {
-      this.props.onEdit(value)
-
-      this.setState({
-        editing: false
-      })
-    }
+    return <li {...this.props}>{this.props.children}</li>
   }
 }
+
+// export default ({ task }) => <div>{ task }</div>
+// export default class Note extends React.Component {
+//   constructor (props) {
+//     super(props)
+
+//     this.state = {
+//       editing: false
+//     }
+//   }
+
+//   render () {
+//     if (this.state.editing) {
+//       return this.renderEdit()
+//     }
+
+//     return this.renderNote()
+//   }
+
+//   renderEdit = () => {
+//     return <input className="field" type="text"
+//       ref={
+//         e => e ? e.selectionStart = this.props.task.length : null
+//       }
+//       autoFocus={true}
+//       defaultValue={this.props.task}
+//       onBlur={this.finishEdit}
+//       onKeyPress={this.checkEnter} />
+//   }
+
+//   renderNote = () => {
+//     // return <div onClick={this.edit}>{this.props.task}</div>
+//     // const onDelete = this.props.onDelete
+//     const {onDelete, ...rest} = this.props
+
+//     return (
+//       <div onClick={this.edit}>
+//         <span className="task">{this.props.task}</span>
+//         {onDelete ? this.renderDelete() : null}
+//       </div>
+//     )
+//   }
+
+//   renderDelete = () => {
+//     const {onDelete, ...rest} = this.props
+
+//     return <button
+//       className="delete-note"
+//       onClick={onDelete}>x</button>
+//   }
+
+//   edit = () => {
+//     this.setState({
+//       editing: true
+//     })
+//   }
+
+//   checkEnter = e => {
+//     if (e.key === 'Enter') {
+//       this.finishEdit(e)
+//     }
+//   }
+
+//   finishEdit = e => {
+//     const value = e.target.value
+
+//     if (this.props.onEdit) {
+//       this.props.onEdit(value)
+
+//       this.setState({
+//         editing: false
+//       })
+//     }
+//   }
+// }
