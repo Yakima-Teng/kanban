@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const NpmInstallPlugin = require('npm-install-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanPlugin = require('clean-webpack-plugin')
 const TARGET = process.env.npm_lifecycle_event
 
 // Load *package.json* so we can use `dependencies` from there
@@ -110,6 +111,7 @@ if (TARGET === 'build') {
       chunkFilename: '[chunkhash].js'
     },
     plugins: [
+      new CleanPlugin(['./dist/']),
       // Extract vendor and manifest files
       new webpack.optimize.CommonsChunkPlugin({
         names: ['vendor', 'manifest']
