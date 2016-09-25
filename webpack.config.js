@@ -53,7 +53,9 @@ const common = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'node_modules/html-webpack-template/index.ejs',
+      // template: 'node_modules/html-webpack-template/index.ejs',
+      template: './index.ejs',
+      filename: 'index.html',
       title: 'Kanban app',
       appMountId: 'app',
       inject: false
