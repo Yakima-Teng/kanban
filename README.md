@@ -2,6 +2,7 @@
 
 
 > This is a demo established based on a react-and-webpack-related book named "Sruvive JS: Webpack and React From Apprentice to Master".
+
 > Online Demo: [https://yakima-teng.github.io/kanban/](https://yakima-teng.github.io/kanban/)
 
 ## 特点
@@ -21,5 +22,3 @@ npm run build
 npm run deploy
 
 ```
-
- Online demo address: [https://yakima-teng.github.io/kanban/](https://yakima-teng.github.io/kanban/)
