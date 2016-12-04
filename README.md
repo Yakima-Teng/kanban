@@ -5,8 +5,7 @@
 > Online Demo: [https://yakima-teng.github.io/kanban/](https://yakima-teng.github.io/kanban/)
 
 ## 特点
-1. DOM操作频率较高，可作为日后练习性能优化的测试用例。
-2. 每次新生成的各个矩形小块中不会出现同色者。
+1. React + Alt
 
 ## 说明
 
